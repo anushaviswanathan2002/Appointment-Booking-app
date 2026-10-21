@@ -19,6 +19,6 @@ npm run dev
 
 - Pick from 6 service types (doctor, salon, dental, etc.)
 - Choose a date and time slot (already-booked slots are disabled)
-- Enter name and email to confirm
+- Enter name, email, and an optional reason for your visit
 - See confirmation screen
 - View and cancel existing appointments

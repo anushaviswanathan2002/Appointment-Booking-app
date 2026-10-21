@@ -47,6 +47,7 @@ export default function App() {
   const [slot, setSlot] = useState(null)
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [reason, setReason] = useState('')
   const [appointments, setAppointments] = useState(loadAppointments)
   const [lastBooked, setLastBooked] = useState(null)
   const [dark, setDark] = useState(loadTheme)
@@ -81,12 +82,14 @@ export default function App() {
       slot,
       name,
       email,
+      reason: reason.trim(),
     }
     persist([appt, ...appointments])
     setLastBooked(appt)
     setSlot(null)
     setName('')
     setEmail('')
+    setReason('')
   }
 
   const cancel = (id) => {
@@ -192,6 +195,17 @@ export default function App() {
                 required
               />
             </div>
+            <div className="form-row">
+              <label>
+                Reason for visit <span className="optional">(optional)</span>
+              </label>
+              <textarea
+                value={reason}
+                onChange={(e) => setReason(e.target.value)}
+                placeholder="Briefly describe what you'd like to discuss..."
+                rows={3}
+              />
+            </div>
             <button className="confirm-btn" type="submit" disabled={!canBook}>
               Confirm Booking
             </button>
@@ -207,6 +221,9 @@ export default function App() {
             {lastBooked.serviceName} on {lastBooked.date} at {lastBooked.slot}
           </p>
           <p>A confirmation has been sent to {lastBooked.email}.</p>
+          {lastBooked.reason && (
+            <p className="reason-note">Note: {lastBooked.reason}</p>
+          )}
         </div>
       )}
 
@@ -225,6 +242,7 @@ export default function App() {
                   <p>
                     {a.date} at {a.slot} — {a.name}
                   </p>
+                  {a.reason && <p className="reason-text">📝 {a.reason}</p>}
                 </div>
                 <button className="cancel-btn" onClick={() => cancel(a.id)}>
                   Cancel

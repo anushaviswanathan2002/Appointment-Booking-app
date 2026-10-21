@@ -203,6 +203,36 @@ body.dark .form-row input {
   border-color: #4299e1;
 }
 
+.form-row textarea {
+  width: 100%;
+  padding: 0.6rem;
+  border: 1px solid #cbd5e0;
+  border-radius: 6px;
+  font-size: 1rem;
+  font-family: inherit;
+  background: #fff;
+  color: inherit;
+  resize: vertical;
+  min-height: 60px;
+}
+
+body.dark .form-row textarea {
+  background: #2d3139;
+  border-color: #3d4149;
+  color: #e4e6eb;
+}
+
+.form-row textarea:focus {
+  outline: none;
+  border-color: #4299e1;
+}
+
+.optional {
+  color: #a0aec0;
+  font-weight: normal;
+  font-size: 0.85rem;
+}
+
 .confirm-btn {
   width: 100%;
   background: #38a169;
@@ -246,6 +276,25 @@ body.dark .form-row input {
 .confirmation p {
   color: #2f855a;
   margin-bottom: 0.3rem;
+}
+
+.reason-note {
+  font-style: italic;
+  color: #4a5568 !important;
+}
+
+body.dark .reason-note {
+  color: #cbd5e0 !important;
+}
+
+.reason-text {
+  color: #718096;
+  font-size: 0.9rem;
+  margin-top: 0.3rem;
+}
+
+body.dark .reason-text {
+  color: #a0aec0;
 }
 
 .appointments-list {
