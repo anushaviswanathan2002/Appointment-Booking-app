@@ -51,6 +51,7 @@ export default function App() {
   const [appointments, setAppointments] = useState(loadAppointments)
   const [lastBooked, setLastBooked] = useState(null)
   const [dark, setDark] = useState(loadTheme)
+  const [sortOrder, setSortOrder] = useState('asc') // 'asc' = soonest first
 
   useEffect(() => {
     document.body.classList.toggle('dark', dark)
@@ -95,6 +96,17 @@ export default function App() {
   const cancel = (id) => {
     persist(appointments.filter((a) => a.id !== id))
   }
+
+  const sortedAppointments = useMemo(() => {
+    const cmp = (a, b) => {
+      const ad = `${a.date}T${a.slot}`
+      const bd = `${b.date}T${b.slot}`
+      return ad < bd ? -1 : ad > bd ? 1 : 0
+    }
+    const copy = [...appointments]
+    copy.sort((a, b) => (sortOrder === 'asc' ? cmp(a, b) : cmp(b, a)))
+    return copy
+  }, [appointments, sortOrder])
 
   return (
     <div className="app">
@@ -228,12 +240,23 @@ export default function App() {
       )}
 
       <div className="card">
-        <h2>Your Appointments</h2>
+        <div className="appointments-header">
+          <h2>Your Appointments</h2>
+          {appointments.length > 1 && (
+            <button
+              className="sort-btn"
+              onClick={() => setSortOrder((o) => (o === 'asc' ? 'desc' : 'asc'))}
+              aria-label="Toggle sort order"
+            >
+              Sort: {sortOrder === 'asc' ? 'Soonest first ↑' : 'Latest first ↓'}
+            </button>
+          )}
+        </div>
         {appointments.length === 0 ? (
           <p className="empty-state">No appointments yet.</p>
         ) : (
           <ul className="appointments-list">
-            {appointments.map((a) => (
+            {sortedAppointments.map((a) => (
               <li key={a.id}>
                 <div className="info">
                   <h4>
