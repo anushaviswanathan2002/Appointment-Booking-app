@@ -9,7 +9,35 @@ body {
   background: #f0f4f8;
   color: #1a202c;
   min-height: 100vh;
+  transition: background 0.25s, color 0.25s;
 }
+
+body.dark {
+  background: #1a1d23;
+  color: #e4e6eb;
+}
+
+.header-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+}
+.theme-toggle {
+  background: #fff;
+  border: 1px solid #cbd5e0;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.theme-toggle:hover { background: #ebf8ff; }
+body.dark .theme-toggle {
+  background: #2d3139;
+  border-color: #3d4149;
+}
+body.dark .theme-toggle:hover { background: #3a3f48; }
 
 .app {
   max-width: 960px;
@@ -31,12 +59,19 @@ header p {
   color: #4a5568;
 }
 
+body.dark header p { color: #9ca3af; }
+
 .card {
   background: #fff;
   border-radius: 12px;
   padding: 1.5rem;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   margin-bottom: 1.5rem;
+}
+
+body.dark .card {
+  background: #252932;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
 }
 
 .card h2 {
@@ -60,6 +95,11 @@ header p {
   text-align: center;
 }
 
+body.dark .service {
+  border-color: #3d4149;
+  background: #2d3139;
+}
+
 .service:hover {
   border-color: #4299e1;
 }
@@ -67,6 +107,11 @@ header p {
 .service.selected {
   border-color: #2b6cb0;
   background: #ebf8ff;
+}
+
+body.dark .service.selected {
+  border-color: #63b3ed;
+  background: #2c4a6b;
 }
 
 .service .emoji {
@@ -99,6 +144,12 @@ header p {
   text-align: center;
   font-size: 0.9rem;
   transition: all 0.2s;
+  color: inherit;
+}
+
+body.dark .slot {
+  background: #2d3139;
+  border-color: #3d4149;
 }
 
 .slot:hover:not(.booked) {
@@ -137,6 +188,14 @@ header p {
   border-radius: 6px;
   font-size: 1rem;
   font-family: inherit;
+  background: #fff;
+  color: inherit;
+}
+
+body.dark .form-row input {
+  background: #2d3139;
+  border-color: #3d4149;
+  color: #e4e6eb;
 }
 
 .form-row input:focus {
@@ -199,6 +258,10 @@ header p {
   align-items: center;
   padding: 0.75rem;
   border-bottom: 1px solid #edf2f7;
+}
+
+body.dark .appointments-list li {
+  border-bottom-color: #3d4149;
 }
 
 .appointments-list li:last-child {

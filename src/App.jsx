@@ -1,4 +1,4 @@
-import { useState, useMemo } from 'react'
+import { useState, useMemo, useEffect } from 'react'
 
 const SERVICES = [
   { id: 1, name: 'Doctor Consultation', duration: 30, emoji: '🩺' },
@@ -21,6 +21,7 @@ const TIME_SLOTS = [
 ]
 
 const STORAGE_KEY = 'bookit-appointments'
+const THEME_KEY = 'bookit-theme'
 
 function loadAppointments() {
   try {
@@ -36,6 +37,10 @@ function todayISO() {
   return new Date().toISOString().slice(0, 10)
 }
 
+function loadTheme() {
+  return localStorage.getItem(THEME_KEY) === 'dark'
+}
+
 export default function App() {
   const [service, setService] = useState(null)
   const [date, setDate] = useState(todayISO())
@@ -44,6 +49,12 @@ export default function App() {
   const [email, setEmail] = useState('')
   const [appointments, setAppointments] = useState(loadAppointments)
   const [lastBooked, setLastBooked] = useState(null)
+  const [dark, setDark] = useState(loadTheme)
+
+  useEffect(() => {
+    document.body.classList.toggle('dark', dark)
+    localStorage.setItem(THEME_KEY, dark ? 'dark' : 'light')
+  }, [dark])
 
   const bookedKeys = useMemo(
     () => new Set(appointments.map((a) => `${a.date}-${a.slot}`)),
@@ -85,8 +96,19 @@ export default function App() {
   return (
     <div className="app">
       <header>
-        <h1>📅 BookIt</h1>
-        <p>Schedule your next appointment in seconds</p>
+        <div className="header-row">
+          <div>
+            <h1>📅 BookIt</h1>
+            <p>Schedule your next appointment in seconds</p>
+          </div>
+          <button
+            className="theme-toggle"
+            onClick={() => setDark((d) => !d)}
+            aria-label="Toggle dark mode"
+          >
+            {dark ? '☀️' : '🌙'}
+          </button>
+        </div>
       </header>
 
       <div className="card">
